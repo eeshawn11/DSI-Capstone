@@ -2,8 +2,6 @@
 
 ## Introduction
 
----
-
 It has been a fantastic learning journey over the course of the 12-week Data Science Immersive with General Assembly, from learning the basics of Python to getting acquainted with machine learning through scikit-learn. With the prescribed course projects covering various aspects of machine learning such as regression and classification problems, I wanted to venture further and explore deep learning with larger datasets. With a variety of tutorials available, TensorFlow and Keras seemed like a good place to start.
 
 Image caption generation allows a machine to generate a sentence in natural language that describes the context of an image. While seemingly mundane, this could have wider applications in various fields, such as assisting the visually impaired by explaining images through text-to-speech systems or perhaps used to tag and organise photos in a library.
@@ -20,21 +18,15 @@ The model architecture used here is based on the TensorFlow [tutorial](https://w
 
 ## Problem Statement
 
----
-
 To train an attention mechanism based caption generator model with a BLEU-1 score of at least 0.4.
 
 ## Gathering the Data
-
----
 
 There are various available datasets that are suitable for the purpose of our training, but I will be utilising the [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/) dataset in this project, a popular free dataset for use with image caption generation. The dataset consists of 158,915 crowd-sourced captions describing 31,783 images. The dataset is still relatively small enough for us to be able to train in a Google Colab environment or local machine without an extensive training duration.
 
 Larger and more robust datasets to consider include Microsoft's [COCO Captions](https://cocodataset.org/) dataset with over 1.5 million captions describing over 330,000 images or even Google's [Conceptual Captions Dataset](https://ai.google.com/research/ConceptualCaptions/) with around 3.3 million image and caption pairs! However, the size of these datasets would also require significantly higher resources and computation power to complete training.
 
 ## Preparing the Dataset
-
----
 
 The data is converted into the TensorFlow dataset format to better optimise the training workflow with a data pipeline. As the data is too large to be handled by the memory at once, leveraging upon various features of the `tf.data` API will allow for more efficient training.
 
@@ -68,8 +60,6 @@ A TextVectorization layer will be used to transform our text captions into integ
 
 ## Model Setup
 
----
-
 Since I am using the pre-trained MobileNet as an image encoder, the model will be focusing on text decoding using a 2-layer Transformer-decoder, taking reference from the TensorFlow [tutorial](https://www.tensorflow.org/tutorials/text/image_captioning), implementing the model using a model subclass API.
 
 The model will be implemented in three main parts:
@@ -93,8 +83,6 @@ Training stopped after completing epoch 60, after no improvement to the accuracy
 
 ## Evaluating Model Performance
 
----
-
 The BLEU score is a commonly used measure for the performance of an image caption generator. Originally developed to measure the performance of language translation models, it compares the similarity between a hypothesis statement and reference statements based on n-grams. It returns a score between 0 to 1, where 1 indicates high similarity between the two.
 
 For our purpose, the BLEU score can be used to compare how similar our predicted captions are with the original captions in the test dataset.
@@ -110,8 +98,6 @@ Based on 1,000 samples from our test dataset, we see that our model is performin
 
 ## Future Work
 
----
-
 Beyond the scope of this current project, there are opportunities to further refine and enhance on the capabilities of the model.
 
 1. The choice of MobileNet as my feature extraction model allowed for more efficient training of my model without excessive wait times due to limited computation power and time. For subsequent training, it would be possible to utilise a different pre-trained model that has higher prediction accuracy and/or a higher output complexity. Since this provides the input to our caption generator, the model could better pick up on features and details within the image.
@@ -122,12 +108,9 @@ Beyond the scope of this current project, there are opportunities to further ref
 
 ## Conclusion
 
----
-
 The trained model is able to generate a relatively good descriptive caption for images and achieved a BLEU-1 score of 0.52 based on the test samples. While there is definitely room for improvement, this feels like a good first step in my deep learning journey and I am excited to try out other projects!
 
 ## Resources
----
 
 - Brownlee, J. (2022, August 15). Difference between a batch and an epoch in a neural network. MachineLearningMastery.com. Retrieved January 20, 2023, from https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/ 
 
