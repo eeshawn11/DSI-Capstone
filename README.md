@@ -22,7 +22,7 @@ To train an attention mechanism based caption generator model with a BLEU-1 scor
 
 ## Gathering the Data
 
-There are various available datasets that are suitable for the purpose of our training, but I will be utilising the [Flickr30k](https://shannon.cs.illinois.edu/DenotationGraph/) dataset in this project, a popular free dataset for use with image caption generation. The dataset consists of 158,915 crowd-sourced captions describing 31,783 images. The dataset is still relatively small enough for us to be able to train in a Google Colab environment or local machine without an extensive training duration.
+There are various available datasets that are suitable for the purpose of our training, but I will be utilising the [Flickr30k](https://www.kaggle.com/datasets/eeshawn/flickr30k) dataset in this project, a popular free dataset for use with image caption generation. The dataset consists of 158,915 crowd-sourced captions describing 31,783 images. The dataset is still relatively small enough for us to be able to train in a Google Colab environment or local machine without an extensive training duration.
 
 Larger and more robust datasets to consider include Microsoft's [COCO Captions](https://cocodataset.org/) dataset with over 1.5 million captions describing over 330,000 images or even Google's [Conceptual Captions Dataset](https://ai.google.com/research/ConceptualCaptions/) with around 3.3 million image and caption pairs! However, the size of these datasets would also require significantly higher resources and computation power to complete training.
 
