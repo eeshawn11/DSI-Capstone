@@ -73,6 +73,8 @@ The model will be implemented in three main parts:
 
 ![model](./assets/model.png)
 
+Image adapted from TensorFlow [tutorial](https://www.tensorflow.org/text/tutorials/transformer)
+
 ### Training
 
 Since the dataset is too large to pass into the model at once, I will be training the model with a mini-batch gradient descent with a batch size of 32. The standard definition of an epoch is when the model has passed through the full dataset once. With 24,576 samples in our train dataset, the model completes each epoch in 768 batches. Instead, we will specify the `steps_per_epoch` and allow the model to loop through our shuffled dataset on repeat to introduce some variance into the samples seen by the model in each epoch.
@@ -96,7 +98,11 @@ For my purpose, the BLEU score can be used to compare how similar the predicted 
 |BLEU-3|0.1994|
 |BLEU-4|0.1183|
 
-Based on 1,000 samples from the test dataset, the model is performing relatively well, with a BLEU-1 score of 0.52, above the 0.4 target. Let's generate some caption for some unseen images to see how well the model is doing.
+Based on 1,000 samples from the test dataset, the model is performing relatively well, with a BLEU-1 score of 0.52, above the 0.4 target. Some caption samples from the model:
+
+![sample1: man on a mountain](./assets/sample_output_1.png)
+
+![sample2: busy street](./assets/sample_output_2.png)
 
 ## Future Work
 
