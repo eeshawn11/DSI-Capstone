@@ -100,8 +100,10 @@ For my purpose, the BLEU score can be used to compare how similar the predicted 
 
 Based on 1,000 samples from the test dataset, the model is performing relatively well, with a BLEU-1 score of 0.52, above the 0.4 target. Some caption samples from the model:
 
+[Original image](https://www.westernunion.com/blog/wp-content/uploads/2016/12/Hiking-Cover-e1481132901201.jpg)
 ![sample1: man on a mountain](./assets/sample_output_1.png)
 
+[Original Image](https://c8.alamy.com/comp/DB00NR/busy-street-in-madurai-india-DB00NR.jpg)
 ![sample2: busy street](./assets/sample_output_2.png)
 
 ## Future Work
