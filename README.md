@@ -39,11 +39,11 @@ The dataset will be split into 3: train, validation and test sets. Train and val
 
 ### Image Feature Extraction
 
-Using transfer learning with a pre-trained image classifier model, we can extract the features from our images. 
+Using transfer learning with a pre-trained image classifier model, we can extract the features from our images.
 
 The MobileNet V3 Small model that I will be using for feature extraction takes an input image shape of 224 x 224 pixels and 3 x RGB channels (224, 224, 3), so images need to be resized before passing into the model. Since I am not trying to perform classification, `include_top=False` returns the model without the final classification layer and allows me to extract a feature map from the image.
 
-![classifier models based on top 5% accuracy against parameters](./assets/model_comparison.png) 
+![classifier models based on top 5% accuracy against parameters](./assets/model_comparison.png)
 
 [Image Source](https://paperswithcode.com/lib/torchvision/mobilenet-v3)
 
@@ -71,9 +71,11 @@ The model will be implemented in three main parts:
     1. A feed forward network (FeedForward) layer which further processes each output location independently.
 1. Output - A multiclass-classification over the output vocabulary.
 
+![model](./assets/model.png)
+
 ### Training
 
-Since the dataset is too large to pass into the model at once, I will be training the model with a mini-batch gradient descent with a batch size of 32. The standard definition of an epoch is when the model has passed through the full dataset once. With 24,576 samples in our train dataset, the model completes each epoch in 768 batches. Instead, we will specify the `steps_per_epoch` and allow the model to loop through our shuffled dataset on repeat to introduce some variance into the samples seen by the model in each epoch. 
+Since the dataset is too large to pass into the model at once, I will be training the model with a mini-batch gradient descent with a batch size of 32. The standard definition of an epoch is when the model has passed through the full dataset once. With 24,576 samples in our train dataset, the model completes each epoch in 768 batches. Instead, we will specify the `steps_per_epoch` and allow the model to loop through our shuffled dataset on repeat to introduce some variance into the samples seen by the model in each epoch.
 
 While we have set the model to train for 100 epochs, it is likely that the model will stop training early once the `early_stop` callback kicks in.
 
@@ -85,7 +87,7 @@ Training stopped after completing epoch 60, after no improvement to the accuracy
 
 The BLEU score is a commonly used measure for the performance of an image caption generator. Originally developed to measure the performance of language translation models, it compares the similarity between a hypothesis statement and reference statements based on n-grams. It returns a score between 0 to 1, where 1 indicates high similarity between the two.
 
-For our purpose, the BLEU score can be used to compare how similar our predicted captions are with the original captions in the test dataset.
+For my purpose, the BLEU score can be used to compare how similar the predicted captions are with the original captions in the test dataset.
 
 |Metric|Score|
 |---|---|
@@ -94,7 +96,7 @@ For our purpose, the BLEU score can be used to compare how similar our predicted
 |BLEU-3|0.1994|
 |BLEU-4|0.1183|
 
-Based on 1,000 samples from our test dataset, we see that our model is performing relatively well, with a BLEU-1 score of 0.52, above our 0.4 target. Let's generate some caption for some unseen images to see how well our model is doing.
+Based on 1,000 samples from the test dataset, the model is performing relatively well, with a BLEU-1 score of 0.52, above the 0.4 target. Let's generate some caption for some unseen images to see how well the model is doing.
 
 ## Future Work
 
