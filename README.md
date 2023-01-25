@@ -126,4 +126,6 @@ The trained model is able to generate a relatively good descriptive caption for 
 
 - Kishore Papineni, Salim Roukos, Todd Ward, and Wei-Jing Zhu. 2002. BLEU: a method for automatic evaluation of machine translation. In Proceedings of the 40th Annual Meeting on Association for Computational Linguistics (ACL '02). Association for Computational Linguistics, USA, 311–318. https://doi.org/10.3115/1073083.1073135
 
+- Neural machine translation with a transformer and Keras. TensorFlow. (2022). Retrieved January 20, 2023, from https://www.tensorflow.org/text/tutorials/transformer
+
 - Peter Young, Alice Lai, Micah Hodosh, Julia Hockenmaier; From image descriptions to visual denotations: New similarity metrics for semantic inference over event descriptions. Transactions of the Association for Computational Linguistics 2014; 2 67–78. doi: https://doi.org/10.1162/tacl_a_00166
