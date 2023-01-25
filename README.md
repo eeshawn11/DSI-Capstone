@@ -18,7 +18,7 @@ The model architecture used here is based on the TensorFlow [tutorial](https://w
 
 ## Problem Statement
 
-To train an attention mechanism based caption generator model with a BLEU-1 score of at least 0.4.
+To train an attention mechanism-based caption generator that is able to generate a descriptive caption of an image with a BLEU-1 score of at least 0.5.
 
 ## Gathering the Data
 
