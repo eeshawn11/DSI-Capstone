@@ -29,7 +29,7 @@ def load_image(image_path, image_shape=(224, 224, 3), preserve_aspect_ratio=Fals
     img = tf.image.resize(img, image_shape[:-1], preserve_aspect_ratio=preserve_aspect_ratio)
     return img
 
-@st.experimental_singleton(show_spinner="Model building in progress...", max_entries=1)
+@st.experimental_singleton(show_spinner="Model building in progress...")
 def build_model():
     # image encoder
     feature_extractor = tf.keras.applications.MobileNetV3Small(
