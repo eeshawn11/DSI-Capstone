@@ -10,9 +10,6 @@ from PIL import Image
 import matplotlib.pyplot as plt
 plt.style.use("fivethirtyeight")
 
-import warnings
-warnings.filterwarnings("ignore")
-
 import tensorflow as tf
 from models.custom_model import Captioner, TokenOutput
 
@@ -105,6 +102,7 @@ image_options = ("", "Sample One", "Sample Two", "Sample Three")
 
 ###
 # Include option to generate by URL?
+# figure out how to display attention map
 ###
 
 intro_placeholder = st.empty()

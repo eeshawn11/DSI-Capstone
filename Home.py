@@ -2,9 +2,6 @@
 import streamlit as st
 import os
 
-import matplotlib.pyplot as plt
-plt.style.use("fivethirtyeight")
-
 if "WORKSPACE_PATH" not in st.session_state:
     st.session_state.WORKSPACE_PATH = os.getcwd()
 
