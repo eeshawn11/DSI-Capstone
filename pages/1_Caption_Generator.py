@@ -86,6 +86,11 @@ with st.sidebar:
         """
         )
 
+###
+# Include sample images for selection
+# Include option to generate by URL?
+###
+
 results_placeholder = st.empty()
 
 uploaded_file = st.file_uploader(
