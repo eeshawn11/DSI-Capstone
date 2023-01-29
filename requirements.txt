@@ -3,5 +3,5 @@ numpy==1.22.0
 einops>=0.6.0
 tqdm==4.64.1
 matplotlib==3.2.2
-streamlit==1.16.0
+streamlit==1.13.0
 protobuf==3.19.6
