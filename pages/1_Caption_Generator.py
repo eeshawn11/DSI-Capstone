@@ -3,6 +3,7 @@ import os
 import re
 import string
 import streamlit as st
+from streamlit_extras.switch_page_button import switch_page
 from pickle import load
 from PIL import Image
 
@@ -13,12 +14,15 @@ import warnings
 warnings.filterwarnings("ignore")
 
 import tensorflow as tf
-from custom_model import Captioner, TokenOutput
+from models.custom_model import Captioner, TokenOutput
+
+if "WORKSPACE_PATH" not in st.session_state:
+    switch_page("Home")
 
 max_caption_length = 73
 MODEL_PATH = os.path.join(st.session_state.WORKSPACE_PATH, "models")
-VOCAB_PATH = os.path.join(st.session_state.WORKSPACE_PATH, "tokenizer_vocab.pkl")
-OUTPUT_LAYER_PATH = os.path.join(st.session_state.WORKSPACE_PATH, "output_layer_bias.pkl")
+VOCAB_PATH = os.path.join(MODEL_PATH, "tokenizer_vocab.pkl")
+OUTPUT_LAYER_PATH = os.path.join(MODEL_PATH, "output_layer_bias.pkl")
 
 def load_image(image_path, image_shape=(224, 224, 3), preserve_aspect_ratio=False):
     if type(image_path) == str:
@@ -28,6 +32,12 @@ def load_image(image_path, image_shape=(224, 224, 3), preserve_aspect_ratio=Fals
         img = image_path
     img = tf.image.resize(img, image_shape[:-1], preserve_aspect_ratio=preserve_aspect_ratio)
     return img
+
+def predict_caption(image_path):
+    image = Image.open(image_path).convert("RGB")
+    image = load_image(image)
+    pred = model.simple_gen(image)
+    return pred
 
 @st.experimental_singleton(show_spinner="Model building in progress...")
 def build_model():
@@ -86,25 +96,62 @@ with st.sidebar:
 
 model = build_model()
 
+samples = {
+    "Sample One": ("./assets/sample_one.jpg", "https://flickr.com/photos/ee_shawn/31567626557/"),
+    "Sample Two": ("./assets/sample_two.jpg", "https://flickr.com/photos/ee_shawn/37590506210/"),
+    "Sample Three": ("./assets/sample_three.jpg", "https://flickr.com/photos/ee_shawn/20422881640/")
+}
+image_options = ("", "Sample One", "Sample Two", "Sample Three")
+
 ###
-# Include sample images for selection
 # Include option to generate by URL?
 ###
 
+intro_placeholder = st.empty()
+
 results_placeholder = st.empty()
 
+image_option = st.selectbox(
+    "Try the caption generator with a sample image.",
+    image_options,
+)
+
 uploaded_file = st.file_uploader(
-    "Upload image an image to generate a caption",
+    "Upload an image to generate a caption",
     type=["PNG", "JPG", "JPEG"],
 )
 
-if uploaded_file:
+if not uploaded_file and image_option == image_options[0]:
+    with intro_placeholder.container():
+        st.markdown(
+        """
+        ##### Try out the model with one of the sample images below, or upload your own to see what caption is generated!
+        """
+    )
+else:
+    if uploaded_file:
+        image = uploaded_file
+        image_link = None
+        caption = predict_caption(uploaded_file)
+    else:
+        image_path = samples[image_option][0]
+        image = image_path
+        image_link = "Image Source: " + samples[image_option][1]
+        caption = predict_caption(image)
+    
     with results_placeholder.container():
-        uploaded_image = Image.open(uploaded_file).convert("RGB")
-        uploaded_image = load_image(uploaded_image)
-        pred = model.simple_gen(uploaded_image)
-
         st.markdown("### Predicted Caption")
-        st.success(pred)
-        st.image(uploaded_file)
+        st.success(caption)
+        st.image(image, use_column_width=True, caption=image_link)
         st.markdown("---")
+
+st.markdown("---")
+
+with st.expander("Project Limitations"):
+    st.markdown(
+        """
+        As with all projects, there are limitations to the current deployed model. While relatively robust for simpler use cases like my project, the Flickr30k dataset only includes around 31,000 image samples. The model would be constrained by the types of images and captions present in the dataset, as you may observe with the predictions.
+        
+        To fully maximise the potential of the model, larger datasets like COCO or Conceptual Captions could be considered.
+        """
+    )

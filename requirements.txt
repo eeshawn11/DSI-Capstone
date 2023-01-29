@@ -5,3 +5,4 @@ tqdm==4.64.1
 matplotlib==3.2.2
 streamlit==1.11.0
 protobuf~=3.19.0
+streamlit_extras>=0.2.4
