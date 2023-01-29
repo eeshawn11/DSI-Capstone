@@ -74,8 +74,6 @@ def build_model():
 
     return model
 
-model = build_model()
-
 with st.sidebar:
     st.markdown(
         """
@@ -85,6 +83,8 @@ with st.sidebar:
         - Check out my other projects on [GitHub](https://github.com/eeshawn11/)
         """
         )
+
+model = build_model()
 
 ###
 # Include sample images for selection
