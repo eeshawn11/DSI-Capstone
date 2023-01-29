@@ -114,6 +114,7 @@ results_placeholder = st.empty()
 image_option = st.selectbox(
     "Try the caption generator with a sample image.",
     image_options,
+    help="Clear uploaded file to use sample image."
 )
 
 uploaded_file = st.file_uploader(
