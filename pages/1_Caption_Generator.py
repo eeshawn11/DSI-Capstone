@@ -36,7 +36,7 @@ def predict_caption(image_path):
     pred = model.simple_gen(image)
     return pred
 
-@st.experimental_singleton(show_spinner="Model building in progress...")
+@st.experimental_singleton(show_spinner="Building model...")
 def build_model():
     # image encoder
     feature_extractor = tf.keras.applications.MobileNetV3Small(
