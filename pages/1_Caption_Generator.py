@@ -26,15 +26,16 @@ def load_image(image_path, image_shape=(224, 224, 3), preserve_aspect_ratio=Fals
         img = tf.io.read_file(image_path)
         img = tf.io.decode_image(img, channels=3)
     else:
-        img = image_path
+        img = Image.open(image_path).convert("RGB")
     img = tf.image.resize(img, image_shape[:-1], preserve_aspect_ratio=preserve_aspect_ratio)
     return img
 
 def predict_caption(image_path):
-    image = Image.open(image_path).convert("RGB")
-    image = load_image(image)
+    image = load_image(image_path)
     pred = model.simple_gen(image)
-    return pred
+    attention_plot = model.run_and_show_attention(image)
+    return pred, attention_plot
+
 
 @st.experimental_singleton(show_spinner="Building model...")
 def build_model():
@@ -102,7 +103,6 @@ image_options = ("", "Sample One", "Sample Two", "Sample Three")
 
 ###
 # Include option to generate by URL?
-# figure out how to display attention map
 ###
 
 intro_placeholder = st.empty()
@@ -131,17 +131,19 @@ else:
     if uploaded_file:
         image = uploaded_file
         image_link = None
-        caption = predict_caption(uploaded_file)
+        caption, attention_plot = predict_caption(image)
     else:
         image_path = samples[image_option][0]
         image = image_path
         image_link = "Image Source: " + samples[image_option][1]
-        caption = predict_caption(image)
+        caption, attention_plot = predict_caption(image)
     
     with results_placeholder.container():
         st.markdown("### Predicted Caption")
         st.success(caption)
         st.image(image, use_column_width=True, caption=image_link)
+        st.markdown("#### Attention Map")
+        st.pyplot(attention_plot)
         st.markdown("---")
 
 st.markdown("---")

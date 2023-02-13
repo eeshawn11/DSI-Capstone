@@ -234,6 +234,8 @@ class Captioner(tf.keras.Model):
 
             plt.tight_layout()
 
+            return fig
+        
         result_txt = self.simple_gen(image, temperature)
         str_tokens = result_txt.split()
         str_tokens.append("[END]")
@@ -248,8 +250,8 @@ class Captioner(tf.keras.Model):
             reduction="mean",
         )
 
-        plot_attention_maps(image / 255, str_tokens, attention_maps)
+        attention_plot = plot_attention_maps(image / 255, str_tokens, attention_maps)
         t = plt.suptitle(f"Predicted Caption: {result_txt}")
         t.set_y(1.05)
         
-        return result_txt
+        return attention_plot
