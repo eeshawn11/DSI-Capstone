@@ -143,7 +143,7 @@ else:
         st.success(caption)
         st.image(image, use_column_width=True, caption=image_link)
         st.markdown("#### Attention Map")
-        st.pyplot(attention_plot, clear_figure=False)
+        st.pyplot(attention_plot, format="png")
         st.markdown("---")
 
 st.markdown("---")
