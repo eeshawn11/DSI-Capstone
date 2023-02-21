@@ -16,10 +16,17 @@ from models.custom_model import Captioner, TokenOutput
 if "WORKSPACE_PATH" not in st.session_state:
     switch_page("Home")
 
+if "disabled" not in st.session_state:
+    st.session_state.disabled = False
+
 max_caption_length = 73
 MODEL_PATH = os.path.join(st.session_state.WORKSPACE_PATH, "models")
 VOCAB_PATH = os.path.join(MODEL_PATH, "tokenizer_vocab.pkl")
 OUTPUT_LAYER_PATH = os.path.join(MODEL_PATH, "output_layer_bias.pkl")
+
+def get_image_from_url(url):
+    image_path = tf.keras.utils.get_file(origin=url)
+    return image_path
 
 def load_image(image_path, image_shape=(224, 224, 3), preserve_aspect_ratio=False):
     if type(image_path) == str:
@@ -102,58 +109,117 @@ samples = {
 }
 image_options = ("", "Sample One", "Sample Two", "Sample Three")
 
-###
-# Include option to generate by URL?
-###
-
 intro_placeholder = st.empty()
 
 results_placeholder = st.empty()
 
-image_option = st.selectbox(
-    "Try the caption generator with a sample image.",
-    image_options,
-    help="Clear uploaded file to use sample image."
-)
-
-uploaded_file = st.file_uploader(
-    "Upload an image to generate a caption",
-    type=["PNG", "JPG", "JPEG"],
-)
-
-if not uploaded_file and image_option == image_options[0]:
-    with intro_placeholder.container():
-        st.markdown(
-        """
-        ##### Try out the model with one of the sample images below, or upload your own to see what caption is generated!
-        """
+tab1, tab2 = st.tabs(["Upload Image", "Load from URL"])
+with tab1:
+    uploaded_file = st.file_uploader(
+        "Upload an image to generate a caption",
+        type=["PNG", "JPG", "JPEG"],
+        key="uploaded_file"
     )
-else:
-    if uploaded_file:
-        image = uploaded_file
-        image_link = None
-        caption, attention_plot = predict_caption(image)
-    else:
-        image_path = samples[image_option][0]
-        image = image_path
-        image_link = "Image Source: " + samples[image_option][1]
-        caption, attention_plot = predict_caption(image)
-    
-    with results_placeholder.container():
-        st.markdown("### Predicted Caption")
-        st.success(caption)
-        st.image(image, use_column_width=True, caption=image_link)
-        st.markdown("#### Attention Map")
-        st.pyplot(attention_plot)
-        st.markdown("---")
+with tab2:
+    with st.form("url_input", clear_on_submit=True):
+        image_url = st.text_input(
+            "Image URL",
+            help="URL should end with .png, .jpg or .jpeg"
+            )
+        submitted = st.form_submit_button("Get Image")
+    if submitted:
+        st.session_state.select_sample = image_options[0] # reset selection
+        url_regex_match = re.match(r"((?:https?:\/\/)?.*\.(?:png|jpg|jpeg))", image_url)
+        if url_regex_match is not None:
+            try:
+                get_image_from_url(image_url) # try to retrieve image
+            except:
+                st.error("Sorry, unable to retrieve the image from the provided URL. Please try a different URL or upload an image instead!")
+        else:
+            st.error("Invalid URL, please try again. Image URL should end with .png, .jpg or .jpeg")
 
 st.markdown("---")
 
-with st.expander("Project Limitations"):
-    st.markdown(
-        """
-        As with all projects, there are limitations to the current deployed model. While relatively robust for simpler use cases like my project, the Flickr30k dataset only includes around 31,000 image samples. The model would be constrained by the types of images and captions present in the dataset, as you may observe with the predictions.
+if uploaded_file:
+    st.session_state.select_sample = image_options[0] # reset selection
+    st.session_state.disabled = True
+else:
+    st.session_state.disabled = False
+
+image_option = st.selectbox(
+    "Try the caption generator with a sample image.",
+    image_options,
+    help="Clear uploaded file to use sample image.",
+    disabled=st.session_state.disabled,
+    key="select_sample"
+)
+
+# loading priority = URL, uploaded_file, sample
+if submitted and url_regex_match is not None:
+    image = image_url
+    image_link = image_url
+    image_path = get_image_from_url(image_url)
+    caption, attention_plot = predict_caption(image_path)
+elif uploaded_file:
+    image = uploaded_file
+    image_link = None
+    caption, attention_plot = predict_caption(image)
+elif image_option != image_options[0]:
+    image_path = samples[image_option][0]
+    image = image_path
+    image_link = "Image Source: " + samples[image_option][1]
+    caption, attention_plot = predict_caption(image)
+else:
+    with intro_placeholder.container():
+        st.markdown(
+            """
+            ##### Try out the model with one of the sample images below, or upload your own to see what caption is generated!
+            """
+        )
+
+try:
+    if caption:
+        with results_placeholder.container():
+            st.markdown("### Predicted Caption")
+            st.success(caption)
+            st.image(image, use_column_width=True, caption=image_link)
+            st.markdown("#### Attention Map")
+            st.pyplot(attention_plot)
+            st.markdown("---")
+except:
+    pass
+
+# if not uploaded_file and image_option == image_options[0]:
+#     with intro_placeholder.container():
+#         st.markdown(
+#             """
+#             ##### Try out the model with one of the sample images below, or upload your own to see what caption is generated!
+#             """
+#         )
+# else:
+#     if uploaded_file:
+#         image = uploaded_file
+#         image_link = None
+#         caption, attention_plot = predict_caption(image)
+#     else:
+#         image_path = samples[image_option][0]
+#         image = image_path
+#         image_link = "Image Source: " + samples[image_option][1]
+#         caption, attention_plot = predict_caption(image)
+    
+#     with results_placeholder.container():
+#         st.markdown("### Predicted Caption")
+#         st.success(caption)
+#         st.image(image, use_column_width=True, caption=image_link)
+#         st.markdown("#### Attention Map")
+#         st.pyplot(attention_plot)
+#         st.markdown("---")
+
+# with st.expander("Project Limitations"):
+#     st.markdown(
+#         """
+#         As with all projects, there are limitations to the current deployed model. While relatively robust for simpler use cases like my project, the Flickr30k dataset only includes around 31,000 image samples. The model would be constrained by the types of images and captions present in the dataset, as you may observe with the predictions.
         
-        To fully maximise the potential of the model, larger datasets like COCO or Conceptual Captions could be considered.
-        """
-    )
+#         To fully maximise the potential of the model, larger datasets like COCO or Conceptual Captions could be considered.
+#         """
+#     )

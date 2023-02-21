@@ -45,5 +45,11 @@ st.markdown(
     ### Background
 
     It has been a fantastic learning journey over the course of a 12-week Data Science Immersive with General Assembly, from learning the basics of Python to getting acquainted with machine learning through scikit-learn. With the prescribed course projects covering various aspects of machine learning such as regression and classification problems, I wanted to venture further and explore deep learning with larger datasets. With a variety of tutorials available, TensorFlow and Keras seemed like a good place to start.
+
+    ### Limitations
+
+    As with all projects, there are limitations to the current deployed model. While relatively robust for simpler use cases like my project, the Flickr30k dataset only includes around 31,000 image samples. The model would be constrained by the types of images and captions present in the dataset, as you may observe with the predictions.
+        
+    To fully maximise the potential of the model, larger datasets like COCO or Conceptual Captions could be considered.
     """
 )
