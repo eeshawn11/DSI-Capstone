@@ -1,4 +1,6 @@
-# [Image Caption Generator](https://eeshawn-dsi-capstone.streamlit.app/)
+# Image Caption Generator
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://eeshawn-dsi-capstone.streamlit.app/)
 
 ## Introduction
 
