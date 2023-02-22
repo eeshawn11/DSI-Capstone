@@ -2,15 +2,26 @@
 import streamlit as st
 import os
 
+st.set_page_config(
+    page_title="Image Caption Generator",
+    page_icon="📷",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    menu_items={
+        "Report a bug": "https://github.com/eeshawn11/DSI-Capstone/issues",
+        "About": "Thanks for dropping by!"
+        }
+    )
+
 if "WORKSPACE_PATH" not in st.session_state:
     st.session_state.WORKSPACE_PATH = os.getcwd()
 
 with st.sidebar:
     st.markdown(
         """
-        Created by Shawn
+        Created by Sing Ee Shawn
 
-        - Happy to connect on [LinkedIn](https://www.linkedin.com/in/shawn-sing/)
+        - Say hi and connect on [LinkedIn](https://www.linkedin.com/in/shawn-sing/)!
         - Project source [code](https://github.com/eeshawn11/DSI-Capstone/)
         - Check out my other projects on [GitHub](https://github.com/eeshawn11/)
         """
