@@ -19,14 +19,21 @@ if "WORKSPACE_PATH" not in st.session_state:
 with st.sidebar:
     st.markdown(
         """
-        Created by Sing Ee Shawn
+        Created by [**Shawn Sing**](https://www.linkedin.com/in/shawn-sing/)
 
-        - Say hi and connect on [LinkedIn](https://www.linkedin.com/in/shawn-sing/)!
-        - Project source [code](https://github.com/eeshawn11/DSI-Capstone/)
-        - Check out my other projects on [GitHub](https://github.com/eeshawn11/)
+        - Project source [**code**](https://github.com/eeshawn11/HDB_Resale_Dashboard/)
+        - Check out my other projects on [**GitHub**](https://github.com/eeshawn11/)
         """
         )
 
+st.markdown(
+    """
+    <div style='text-align:center'>
+    <img src='https://live.staticflickr.com/65535/51052311322_d9236f488f_c.jpg' width=799px height=533px>
+    <p>Photo by <a href='https://www.flickr.com/photos/ee_shawn/' target='_blank'>Ee Shawn</a> on <a href='https://flickr.com/photos/ee_shawn/51052311322/' target='_blank'>Flickr</a></p>
+    </div>
+    """, unsafe_allow_html=True
+    )
 st.markdown(
     """
     ## Introduction
