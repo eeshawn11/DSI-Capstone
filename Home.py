@@ -38,7 +38,7 @@ st.markdown(
     """
     ## Introduction
 
-    Image caption generation allows a machine to generate a sentence in natural language that describes the context of an image. While seemingly mundane, this could have wider applications in various fields, such as assisting the visually impaired by explaining images through text-to-speech systems or perhaps used to tag and organise photos in a library.
+    Image caption generation allows a machine to generate a sentence in natural language that describes the context of an image. While seemingly mundane, this could have wider applications in various fields, such as improving accessibility for the visually impaired by providing descriptions of images, or even in healthcare by automatically generating captions for X-ray images to aid doctors in diagnosis.
 
     Personally, as a photography hobbyist, when sharing my [photographs](https://flickr.com/photos/ee_shawn/), I like to pair them with some text that perhaps provides some context to the image and enhances appreciation. It would be interesting if I could train a model that analyses an image and automatically generates a descriptive caption providing some history or information about the image based on the location. This capstone project serves as a foundation: generating a simple descriptive caption based on features within the image.
     """
