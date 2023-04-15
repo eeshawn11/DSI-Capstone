@@ -106,7 +106,7 @@ with st.sidebar:
         Created by [**eeshawn**](https://eeshawn.com)
 
         - Connect on [**LinkedIn**](https://www.linkedin.com/in/shawn-sing/)
-        - Project source [**code**](https://github.com/eeshawn11/HDB_Resale_Dashboard/)
+        - Project source [**code**](https://github.com/eeshawn11/DSI-Capstone/)
         - Check out my other projects on [**GitHub**](https://github.com/eeshawn11/)
         """
         )
